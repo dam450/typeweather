@@ -1,20 +1,26 @@
 import './styles.css';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Input } from '../Input';
-import { getCityByNameService } from '../../services/getCityByNameService';
+import { getCityByNameService, ICityProps } from '../../services/getCityByNameService';
 
-export function SelectCity({ onSelect }) {
-  const [city, setCity] = useState();
+interface IProps {
+  onSelect: (item: ICityProps) => void
+}
+
+export function SelectCity({ onSelect }: IProps) {
+  const [city, setCity] = useState<ICityProps | null>(null);
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  async function getCities(name) {
+  async function getCities(name: string) {
     setIsLoading(true);
 
     const response = await getCityByNameService(name);
 
-    setCity(response);
+    if (response)
+      setCity(response);
+
     setIsLoading(false);
   }
 
@@ -23,7 +29,7 @@ export function SelectCity({ onSelect }) {
       return;
     }
 
-    const debounce = setTimeout(() => getCities(search), 500);
+    const debounce = setTimeout(() => getCities(search), 800);
     return () => clearInterval(debounce);
   }, [search]);
 
@@ -32,7 +38,7 @@ export function SelectCity({ onSelect }) {
       <Input
         isLoading={isLoading}
         placeholder="Buscar local"
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value )}
       />
 
       <div className='select-list'>
