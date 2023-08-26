@@ -4,6 +4,8 @@
   background-color: var(--gray-800);
   padding: 28px 24px 24px;
   border-radius: 12px;
+
+  overflow-y: hidden;
 }
 
 .weather-detail h1 {
@@ -20,10 +22,17 @@
 
 .weather-items {
   margin-top: 36px;
+  height: 85%;
+  overflow-y: auto;
 }
 
 @media (max-width: 768px) {
   .weather-detail {
     overflow: auto;
   }
+
+  /* .weather-items {
+    min-height: 350px;
+    overflow: auto;
+  } */
 }
