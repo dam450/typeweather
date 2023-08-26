@@ -1,17 +1,18 @@
 import './styles.css';
 
 import { useEffect, useState } from 'react';
-import { getWeatherByCity } from '../../services/getWeatherByCity';
+import { IGetWeatherByCityResponseProps, getWeatherByCity } from '../../services/getWeatherByCity';
 
 import { Today } from '../../components/Today';
 import { Details } from '../../components/Details';
 import { Loading } from '../../components/Loading';
 import { NextDays } from '../../components/NextDays';
+import { ICityProps } from '../../services/getCityByNameService';
 
 export function Dashboard() {
-  const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [city, setCity] = useState(JSON.parse(localStorage.getItem('@typewheather:city')));
+  const [ data, setData ] = useState<IGetWeatherByCityResponseProps>({} as IGetWeatherByCityResponseProps);
+  const [ isLoading, setIsLoading ] = useState(true);
+  const [ city, setCity ] = useState<ICityProps>(JSON.parse(localStorage.getItem('@typewheather:city') ?? ''));
 
   useEffect(() => {
     setIsLoading(true);
@@ -21,7 +22,7 @@ export function Dashboard() {
     getWeatherByCity({ latitude, longitude })
       .then((response) => setData(response))
       .finally(() => setIsLoading(false));
-  }, [city]);
+  }, [ city ]);
 
   if (isLoading) {
     return <Loading />
