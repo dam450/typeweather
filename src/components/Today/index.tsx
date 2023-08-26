@@ -4,8 +4,15 @@ import dayjs from 'dayjs';
 import { Logo } from '../Logo';
 import { SelectCity } from '../SelectCity';
 import { isDayTime } from '../../utils/isDayTime';
+import { IWeatherProps } from '../../services/getWeatherByCity';
+import { ICityProps } from '../../services/getCityByNameService';
 
-export function Today({ city, weather, onSearchValue }) {
+interface TodayProps {
+  city: string;
+  weather: IWeatherProps;
+  onSearchValue: (value: ICityProps) => void;
+}
+export function Today({ city, weather, onSearchValue }: TodayProps) {
   const today = dayjs(new Date()).format('dddd, DD [de] MMMM [de] YYYY');
   const isDay = isDayTime();
 
