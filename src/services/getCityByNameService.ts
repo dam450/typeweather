@@ -7,9 +7,23 @@ export interface ICityProps {
   latitude: number
 }
 
+export interface ICityApiResponse {
+  id: string
+  name: string
+  sys: {
+    country?: string
+    sunrise: number
+    sunset: number
+  }
+  coord: {
+    lat: number
+    lon: number
+  }
+}
+
 export async function getCityByNameService(name: string): Promise<ICityProps | null> {
   try {
-    const { data } = await api.get(`/weather?q=${name}`);
+    const { data } = await api.get<ICityApiResponse>(`/weather?q=${name}`);
 
     console.log("data: ", data)
 
